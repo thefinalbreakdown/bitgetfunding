@@ -30,33 +30,30 @@ run = st.button("Fetch Funding Rates")
 
 @st.cache_data(show_spinner=False)
 def fetch_funding_rates(symbol, limit=100):
-    url = "https://api.bitget.com/api/v3/market/history-fund-rate"
+    url = "https://api.bitget.com/api/v2/mix/market/history-fund-rate"
     all_data = []
-    cursor = ""
+    page = 1
 
     while True:
         params = {
-            "category": "USDT-FUTURES",
             "symbol": symbol,
-            "limit": limit,
+            "productType": "USDT-FUTURES",
+            "pageNo": page,
+            "pageSize": limit
         }
-        if cursor:
-            params["cursor"] = cursor
-
         res = requests.get(url, params=params)
         if res.status_code != 200:
             st.error("API Error: " + res.text)
             break
 
-        json_data = res.json()
-        data = json_data.get("data", {}).get("list", [])
+        data = res.json().get("data", [])
         if not data:
             break
 
         all_data.extend(data)
-        cursor = json_data.get("data", {}).get("nextPageCursor", "")
-        if not cursor:
+        if len(data) < limit:
             break
+        page += 1
 
     if not all_data:
         return pd.DataFrame()
