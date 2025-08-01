@@ -6,7 +6,17 @@ from datetime import datetime
 
 st.title("📈 Bitget Funding Rate History")
 
-symbol = st.text_input("Enter symbol (e.g. BTCUSDT)", "BTCUSDT").upper()
+@st.cache_data(show_spinner=False)
+def get_available_symbols():
+    url = "https://api.bitget.com/api/v2/mix/market/tickers?productType=umcbl"
+    res = requests.get(url)
+    if res.status_code != 200:
+        return []
+    data = res.json().get("data", [])
+    return sorted([item["symbol"] for item in data])
+
+available_symbols = get_available_symbols()
+symbol = st.selectbox("Select a symbol", available_symbols)
 limit = st.slider("Records per page", min_value=10, max_value=100, value=100)
 run = st.button("Fetch Funding Rates")
 

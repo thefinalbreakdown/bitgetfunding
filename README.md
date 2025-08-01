@@ -5,7 +5,7 @@ A simple Streamlit app to fetch and export historical funding rates from Bitget.
 
 ## Features
 
-- Input any futures symbol (e.g. BTCUSDT)
+- Dropdown menu with all Bitget USDT-perp symbols
 - Fetch historical funding rate data
 - Export results to CSV
 - Paginated fetching via cursor
