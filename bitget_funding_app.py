@@ -13,7 +13,7 @@ def get_available_symbols():
         res = requests.get(url, timeout=10)
         res.raise_for_status()
         data = res.json().get("data", [])
-        return sorted([item["symbol"] for item in data])
+        return sorted([item["symbol"].replace("_", "") for item in data])
     except Exception as e:
         st.error(f"Failed to load symbols from Bitget API: {e}")
         return []

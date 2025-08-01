@@ -1,14 +1,14 @@
 
-# Bitget Funding Rate History Viewer (Safe Version)
+# Bitget Funding Rate History Viewer (Final Symbol Fix)
 
-A simple Streamlit app to fetch and export historical funding rates from Bitget with robust error handling.
+Streamlit app to view and export Bitget perpetual funding rate history, with correct symbol format conversion.
 
 ## Features
 
-- Dropdown menu with Bitget USDT-futures symbols
-- Safe handling of missing funding data
-- Export to CSV
-- Streamlit Cloud deployable
+- Live dropdown of all Bitget USDT-futures symbols (underscores removed)
+- Safe handling of missing data
+- CSV export
+- Fully deployable to Streamlit Cloud
 
 ## Run locally
 
