@@ -9,13 +9,21 @@ st.title("📈 Bitget Funding Rate History")
 @st.cache_data(show_spinner=False)
 def get_available_symbols():
     url = "https://api.bitget.com/api/v2/mix/market/tickers?productType=umcbl"
-    res = requests.get(url)
-    if res.status_code != 200:
+    try:
+        res = requests.get(url, timeout=10)
+        res.raise_for_status()
+        data = res.json().get("data", [])
+        return sorted([item["symbol"] for item in data])
+    except Exception as e:
+        st.error(f"Failed to load symbols from Bitget API: {e}")
         return []
-    data = res.json().get("data", [])
-    return sorted([item["symbol"] for item in data])
 
 available_symbols = get_available_symbols()
+
+if not available_symbols:
+    st.warning("Could not load symbol list from Bitget. Using fallback list.")
+    available_symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT"]
+
 symbol = st.selectbox("Select a symbol", available_symbols)
 limit = st.slider("Records per page", min_value=10, max_value=100, value=100)
 run = st.button("Fetch Funding Rates")
