@@ -1,11 +1,11 @@
 
-# Bitget Funding Rate History Viewer (with Fallback Symbols)
+# Bitget Funding Rate History Viewer (Final Fix)
 
-A simple Streamlit app to fetch and export historical funding rates from Bitget.
+A simple Streamlit app to fetch and export historical funding rates from Bitget using the correct v2 API format.
 
 ## Features
 
-- Dropdown menu with all Bitget USDT-perp symbols (fallback included)
+- Dropdown menu with live Bitget USDT-futures symbols
 - Fetch historical funding rate data
 - Export results to CSV
 - Paginated fetching via cursor

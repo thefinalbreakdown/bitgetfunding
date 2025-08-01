@@ -8,7 +8,7 @@ st.title("📈 Bitget Funding Rate History")
 
 @st.cache_data(show_spinner=False)
 def get_available_symbols():
-    url = "https://api.bitget.com/api/v2/mix/market/tickers?productType=umcbl"
+    url = "https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES"
     try:
         res = requests.get(url, timeout=10)
         res.raise_for_status()
