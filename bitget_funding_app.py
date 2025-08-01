@@ -58,7 +58,13 @@ def fetch_funding_rates(symbol, limit=100):
         if not cursor:
             break
 
+    if not all_data:
+        return pd.DataFrame()
+
     df = pd.DataFrame(all_data)
+    if "fundingTime" not in df.columns or "fundingRate" not in df.columns:
+        return pd.DataFrame()
+
     df["fundingTime"] = pd.to_datetime(df["fundingTime"].astype(float), unit='ms')
     df["fundingRate"] = df["fundingRate"].astype(float) * 100
     df = df.rename(columns={"fundingTime": "Time", "fundingRate": "Funding Rate (%)"})
